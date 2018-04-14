@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<pthread.h>
+#include<stdlib.h>
+int f[20],p=0;
+pthread_mutex_t mutex;
+void * m()
+{
+	sleep(7);
+	printf("Mouse ate %d\n",a);
+	p=p-1;
+	
+}
+
+void * c()
+{
+	pthread_mutex_lock(&mutex);
+	p=p+1;
+	sleep(2);
+	printf("Cat %d\n",p);
+	f[p]=p;
+	pthread_mutex_unlock(&mutex);
+}
+
+int main()
+{
+	int p=5;
+	pthread_t th1,th2,th3,th4;
+	pthread_create(&th1,NULL,c,NULL);
+	pthread_create(&th2,NULL,c,NULL);
+	pthread_join(th1,NULL);
+	pthread_join(th2,NULL);
+	
+}
